@@ -25,7 +25,7 @@ def read_pos(str):
 def make_pos(tup):
     return str(tup[0]) + "," + str(tup[1])
 
-pos = [(300,30),(300,970)]
+pos = [(300,50),(300,950)]
 
 def threaded_client(conn, player):
     conn.send(str.encode(make_pos(pos[player])))
@@ -35,13 +35,16 @@ def threaded_client(conn, player):
             data = read_pos(conn.recv(2048).decode())
             pos[player] = data
 
+
+
             if not data:
                 print("Disconnected")
                 break
             else:
                 if player == 1:
                     reply = pos[0]
-                else:
+
+                if player == 0:
                     reply = pos[1]
 
                 print("Received: ", data)

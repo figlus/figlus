@@ -285,19 +285,18 @@ public class GameViewManager
     {
         //Utworz ArrayListe przechowujaca 5 pociskow, ktore beda mozliwe do jednoczesnego wystrzelenia
         //(jednoczesnie na ekranie moze byc widocznych 5 lecących pociskow)
-        //w tym celu utworz pole "ammoBox" będące ArrayListą
+        //w tym celu utworz zainicjalizuj pole "ammoBox" będące ArrayListą
         //następnie wypełnij ją obiektami klasy ImageView
-        //Nie zapomnij dodać obiektów do glownego AnchorPana tak aby pocisko byly widoczne
-        ammoBox=new ArrayList<>();
+        //Nie zapomnij dodać obiektów do glownego AnchorPana tak aby pociski byly widoczne
 
-        for(int i=0; i<5; i++)
-        {
-            bulletImage = new ImageView(BULLET_PATH);
-            bulletImage.setLayoutY(1000);
-            bulletImage .setLayoutX(1000);
-            gamePane.getChildren().add(bulletImage);
-            ammoBox.add(bulletImage);
-        }
+
+        ??
+        .
+        .
+        .
+        .
+        .
+        ??
     }
 
 
