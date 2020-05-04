@@ -1,28 +1,32 @@
 import socket
+import pygame
 import pickle
 import math
 import random
+import time
 
-IPADDRES = socket.gethostbyname(socket.gethostname())
+IPADDRES = "192.168.1.66"#socket.gethostbyname(socket.gethostname())
 PORT = 5555
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print(IPADDRES)
 server.bind((IPADDRES, PORT))
 server.listen(2)
 cordsArray = [300, 300, 395, 595] # [xA, xB, ballX, ballY]
-paddleSpeed = 2
+paddleSpeed = 4
 
 connection = []
 xBallVelocity = 3
 yBallVelocity = 3
 maxBounceAngle = 8*math.pi/12
-ballSpeed = 3
+ballSpeed = 8
+clock = pygame.time.Clock()
 
 def resetBallPosition(cordsArray):
     global xBallVelocity, yBallVelocity
     cordsArray[2] = 355
     cordsArray[3] = 555
-    xBallVelocity = random.choice([-1, 1])
-    yBallVelocity = random.choice([-1, 1])
+    xBallVelocity = random.choice([-1, 1])*xBallVelocity
+    yBallVelocity = random.choice([-1, 1])*yBallVelocity
 
 
 def processPositions(cordsArray, paddleAKeyInfo, paddleBKeyInfo):
@@ -72,6 +76,9 @@ def processPositions(cordsArray, paddleAKeyInfo, paddleBKeyInfo):
         xBallVelocity = -xBallVelocity
 
 
+    ## Check if reset button is pressed  - R ##
+
+
 
 
     #### Paddle and Ball contact detection ####
@@ -107,19 +114,20 @@ def waitForConnections():
     while len(connection) < 2:
         conn, addr = server.accept()
         connection.append(conn)
-        #print(conn)
-        #print(connection)
+        print(conn)
+        print(connection)
 
 
 def receiveInformations():
-    paddleA_Info = pickle.loads(connection[0].recv(2048))
-    paddleB_Info = pickle.loads(connection[1].recv(2048))
+    paddleA_Info = pickle.loads(connection[0].recv(1024))
+    paddleB_Info = pickle.loads(connection[1].recv(1024))
 
     return paddleA_Info, paddleB_Info #assigning whether left or right buttons are pressed or not
 
 
 while True:
     waitForConnections()
+    
     pickledCordsArray = pickle.dumps(cordsArray)
     #print(pickledCordsArray)
     connection[0].send(pickledCordsArray)
@@ -128,3 +136,4 @@ while True:
     paddleAKeyInfo, paddleBKeyInfo = receiveInformations()
 
     cordsArray = processPositions(cordsArray, paddleAKeyInfo, paddleBKeyInfo)
+    clock.tick(60)

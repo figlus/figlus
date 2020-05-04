@@ -7,7 +7,7 @@ pygame.init()
 
 # Creating client socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-IPADDR = socket.gethostbyname(socket.gethostname())
+IPADDR = "192.168.1.66" #socket.gethostbyname(socket.gethostname())
 PORT = 5555
 client.connect((IPADDR, PORT))
 # Creating general variables
@@ -69,6 +69,7 @@ def display():
 
         pickledKeyArray = pickle.dumps(keyArray)
         client.send(pickledKeyArray)
+
 
 
 
