@@ -30,7 +30,7 @@ def drawPaddles(xPos,yPos,player):
         pygame.draw.rect(gameDisplay, WHITE, [xPos, yPos, 100, 10])
 
 def drawBall(xPos, yPos):
-    pygame.draw.rect(gameDisplay, WHITE, [xPos, yPos,10,10])
+    pygame.draw.rect(gameDisplay, WHITE, [xPos, yPos,7,7])
 
 def receiveData():
     data = client.recv(2048)
@@ -69,6 +69,7 @@ def display():
 
         pickledKeyArray = pickle.dumps(keyArray)
         client.send(pickledKeyArray)
+
 
 
 
