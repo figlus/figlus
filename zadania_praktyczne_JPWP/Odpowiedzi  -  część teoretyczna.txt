@@ -1,0 +1,8 @@
+1. D - SOCK_STREAM
+2. B - conn.sendall(pickle.dumps(x))
+3. client = socket.socket(socket.AF INET, socket.SOCK STREAM)
+   ADDR = "192.168.2.1"
+   PORT = 5525
+   client.connect((ADDR,PORT))
+4. funkcja atan2 zwraca wynik w radianach więc należy ten wynik przekonwertować na stopnie i dodaj 180 aby uzyskać prawidłową wartość kąta w stopniach
+5. B - przypisuje grafikę do określonego miejsca ekranu
