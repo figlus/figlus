@@ -7,14 +7,15 @@ pygame.init()
 
 # Creating client socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-IPADDR = "192.168.1.66" #socket.gethostbyname(socket.gethostname())
+IPADDR = "34.89.181.232" #socket.gethostbyname(socket.gethostname())
 PORT = 5555
 client.connect((IPADDR, PORT))
 # Creating general variables
 
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-DISPLAY_HEIGHT = 1000
+GREY = (179,179,179)
+BLACK = (102,102,102)
+DISPLAY_HEIGHT = 800
 DISPLAY_WIDTH = 700
 
 clock = pygame.time.Clock()
@@ -33,7 +34,7 @@ def drawBall(xPos, yPos):
     pygame.draw.rect(gameDisplay, WHITE, [xPos, yPos,7,7])
 
 def receiveData():
-    data = client.recv(2048)
+    data = client.recv(100)
     data = pickle.loads(data)
 
     return data
@@ -49,8 +50,10 @@ def display():
         positionsData = receiveData()   #receiving coorinates [xA, xB, ballX, ballY]
         gameDisplay.fill(BLACK)
         drawPaddles(positionsData[0], 50, 0)
-        drawPaddles(positionsData[1], 940, 1)
+        drawPaddles(positionsData[1], 750, 1)
         drawBall(positionsData[2], positionsData[3])
+
+        pygame.display.flip()
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -67,8 +70,9 @@ def display():
 
         keyArray = [key_left, key_right]
 
-        pickledKeyArray = pickle.dumps(keyArray)
-        client.send(pickledKeyArray)
+        pickledKeyArray = pickle.dumps(keyArray,2)
+        client.sendall(pickledKeyArray)
+
 
 
 
